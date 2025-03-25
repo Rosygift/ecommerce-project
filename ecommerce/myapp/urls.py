@@ -35,4 +35,3 @@ urlpatterns =[
 
 
 
-https://github.com/Rosygift/ecommerce-project.git
