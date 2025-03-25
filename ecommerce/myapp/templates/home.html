@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Page</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>ShopEasy</h1>
+            <ul>
+                <li><a href="#">Home</a></li>
+                {%for product in products%}
+                {{product.category.name}}
+                {% endfor %}
+
+                
+                <li><a href="#products">Products</a></li>
+                <li><a href="#cart">Cart</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="{% url 'search' %}">Search</a></li>
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'signup' %}">Signup</a></li>
+                <li><a href="{% url 'add_shipping_address' %}">add_shipping_address</a></li>               
+                <li><a href="{% url 'wishlist_views' %}">Wishlist</a></li>               
+
+            </ul>
+        </nav>
+    </header>
+    <ul class="dropdown-menu">
+        {%for category in categories%}
+        <li>
+            <a class="dropdown-item" href="{% url 'category_view' category.slug %}">
+                {{category.name}}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    <section class="hero">
+        <h2>Welcome to ShopEasy</h2>
+        <p>Your one-stop shop for all your needs.</p>
+        <a href="#products" class="btn">Shop Now</a>
+    </section>
+    <section id="products" class="products">
+        <h2>Our Products</h2>
+        {% for product in products %}
+        <div class="product-grid">
+            <div class="product">
+                <h3>{{ product.name }}</h3>
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <p>{{ product.price }}</p>
+                <p>{{ product.description }}</p>
+                <a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+    <footer>
+        <p>&copy; 2025 ShopEasy. All rights reserved.</p>
+    </footer>
+    <style>
+        /* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+/* Header and Navigation */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+}
+
+nav h1 {
+    display: inline-block;
+    margin-left: 1rem;
+    font-size: 2rem;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1rem;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Hero Section */
+.hero {
+    background-color: #ff6f61;
+    color: #fff;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero .btn {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.hero .btn:hover {
+    background-color: #ff6f61;
+}
+
+/* Products Section */
+.products {
+    padding: 3rem 1rem;
+    background-color: #fff;
+    text-align: center;
+}
+
+.products h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+}
+
+.product {
+    background-color: #fafafa;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.product img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.product h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.product p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.product button {
+    background-color: #ff6f61;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.product button:hover {
+    background-color: #333;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+footer p {
+    font-size: 0.9rem;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero h2 {
+        font-size: 2.5rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .hero .btn {
+        font-size: 0.9rem;
+    }
+
+    .product-grid {
+        gap: 1.5rem;
+    }
+
+    .product {
+        padding: 1rem;
+        max-width: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav h1 {
+        font-size: 1.5rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    .hero h2 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 0.9rem;
+    }
+
+    .hero .btn {
+        font-size: 0.8rem;
+    }
+
+    .product-grid {
+        gap: 1rem;
+    }
+
+    .product h3 {
+        font-size: 1.2rem;
+    }
+
+    .product p {
+        font-size: 1rem;
+    }
+
+    footer p {
+        font-size: 0.8rem;
+    }
+}
+
+    </style>
+</body>
+</html>
